@@ -12,7 +12,7 @@
 <!--</div>-->
 
 <!-- Registration Form -->
-<form th:action="@{/users}" th:object="${user}" method="POST">
+<form th:action="@{/register}" th:object="${user}" method="POST">
     <div>
         <label for="username">Username:</label>
         <input type="text" id="username" th:field="*{username}" required>
