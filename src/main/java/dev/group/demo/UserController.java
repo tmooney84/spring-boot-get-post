@@ -29,6 +29,14 @@ public class UserController {
         return "registerUser";
     }
 
+    //1. need a get request to our login
+   //2.
+
+    @GetMapping ("login")
+
+
+
+
     @PostMapping("")
     public String addUser(@ModelAttribute("user") User user) {
         String encrypted = passwordEncoder.encode(user.getPassword());
@@ -45,4 +53,11 @@ public class UserController {
 }
 
 
+//1) post to /login
 
+
+//2)this is who I say I am (new User("user", encoder.encode("password")
+
+//3) if you are who you say you then if we encode it and it shows up on the database
+// hibernate is doing a select statement select * from user where username=?
+//use SecurityUser.getPassword SecurityUser.getPassword
