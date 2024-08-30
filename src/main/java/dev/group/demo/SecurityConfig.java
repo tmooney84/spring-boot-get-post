@@ -23,10 +23,15 @@ public class SecurityConfig  {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/register").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .userDetailsService(testJpaDetailsService)
-                .formLogin(withDefaults()
+                .formLogin((form) -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/users", true)
+                        .failureUrl("/login?error=true")
+                        .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")  // Specify the logout URL (default is /logout)
@@ -34,7 +39,6 @@ public class SecurityConfig  {
                         .invalidateHttpSession(true) // Invalidate the session
                         .deleteCookies("JSESSIONID") // Delete cookies
                 )
-
                 .build();
                 //this our code that fixes our updated login...
     }
