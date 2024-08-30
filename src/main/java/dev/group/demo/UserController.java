@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/users")
+
 public class UserController {
 
     private final UserService userService;
@@ -17,7 +17,7 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("")
+    @GetMapping("/users")
     public String users(Model model) {
         model.addAttribute("users", userService.findAll());
         return "users";
@@ -32,22 +32,38 @@ public class UserController {
     //1. need a get request to our login
    //2.
 
-    @GetMapping ("login")
+    @GetMapping("/private")
+    public String myprivatepage(){
+        return "private";
+    }
+
+//    @GetMapping ("login")
 
 
 
 
-    @PostMapping("")
+    @PostMapping("/users")
     public String addUser(@ModelAttribute("user") User user) {
         String encrypted = passwordEncoder.encode(user.getPassword());
         user.setPassword(encrypted);
         userService.save(user);
-        return "redirect:/";
+        return "redirect:users";
     }
 
-    @GetMapping("/private")
-    public String myprivatepage(){
-        return "private";
+    @GetMapping("/login")
+    public String addUser(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
+    }
+
+
+    @PostMapping("/login")
+    public String addUser(@ModelAttribute("user") User user) {
+        String encrypted = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encrypted);
+        //register and create but we take this log and tailor it for the login
+        userService.save(user);
+        return "redirect:users";
     }
 
 }

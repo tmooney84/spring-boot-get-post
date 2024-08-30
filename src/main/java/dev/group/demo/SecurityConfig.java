@@ -19,7 +19,6 @@ public class SecurityConfig  {
         this.testJpaDetailsService = jpaDetailsService;
     }
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
