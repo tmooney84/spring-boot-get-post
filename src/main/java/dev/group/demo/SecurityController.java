@@ -20,14 +20,14 @@ public class SecurityController {
 
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
+//    private final AuthenticationManager authenticationManager;
 
 
 
-    public SecurityController(UserService userService, BCryptPasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public SecurityController(UserService userService, BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
+//        this.authenticationManager = authenticationManager;
     }
 
     @GetMapping("/register")
@@ -43,15 +43,7 @@ public class SecurityController {
         User temp = user;
         temp.setPassword(encrypted);
         userService.save(temp);
-        Optional<User> dbUser = userService.findByUsername(temp.getUsername());
-        Authentication token = authenticationManager.authenticate(dbUser);
-        SecurityContextHolder.getContext().setAuthentication(token);
-
-//         Auto-login the user
-
-
-
-        return "redirect::login";
+        return "redirect:users";
 
     }
 
